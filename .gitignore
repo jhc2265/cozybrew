@@ -1,0 +1,6 @@
+node_modules/
+.npm-cache/
+.chrome-preview/
+.codex-preview-server.cjs
+.server-err.log
+.server-out.log
