@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>제품 | COZYBREW</title>
+  <link rel="stylesheet" href="./css/style.css?v=20260604-product-clean">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="./index.html" class="logo">COZYBREW</a>
+      <nav class="gnb" aria-label="주요 메뉴">
+        <div class="nav-item"><a href="./brand.html" class="nav-link">브랜드</a><div class="dropdown"><a href="./brand.html">COZYBREW 소개</a><a href="./brand-philosophy.html">브랜드 철학</a><a href="./brand-showroom.html">쇼룸 안내</a></div></div>
+        <div class="nav-item"><a href="./products.html" class="nav-link">제품</a><div class="dropdown"><a href="./products.html">전체 제품</a><a href="./products.html?category=espresso">에스프레소 머신</a><a href="./products.html?category=grinder">그라인더</a><a href="./products.html?category=capsule">캡슐머신</a><a href="./products.html?category=goods">커피용품</a></div></div>
+        <div class="nav-item"><a href="./story-magazine.html" class="nav-link">스토리</a><div class="dropdown"><a href="./story-idea.html">홈카페 아이디어</a><a href="./story-styling.html">공간별 스타일링</a><a href="./story-magazine.html">커피 라이프 매거진</a></div></div>
+        <div class="nav-item"><a href="#" class="nav-link">가이드</a><div class="dropdown"><a href="#">제품 선택 가이드</a><a href="#">추출 가이드</a><a href="#">관리 &amp; 세척 방법</a><a href="#">설치 가이드</a></div></div>
+        <div class="nav-item"><a href="./support.html" class="nav-link">고객지원</a><div class="dropdown"><a href="./support.html">공지사항</a><a href="./support-as.html">A/S 문의</a><a href="./support-delivery.html">배송·설치</a><a href="./support-faq.html">FAQ</a></div></div>
+      </nav>
+      <div class="header-icons" aria-label="사용자 메뉴">
+        <a href="./search.html" aria-label="검색"><img src="./image/header_icon1.png" alt=""></a>
+        <a href="./login.html" aria-label="로그인"><img src="./image/header_icon2.png" alt=""></a>
+        <a href="./cart.html" class="cart-link" aria-label="장바구니"><img src="./image/header_icon3.png" alt=""><em>5</em></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="sub-page products-page">
+    <section class="category-hero">
+      <img src="./image/category_products_hero.png" alt="" data-category-hero-img>
+      <div class="category-hero-inner page-container">
+        <p class="brand-kicker" data-category-kicker>ALL PRODUCTS</p>
+        <h1 data-category-title>좋은 커피의 시작,<br>COZYBREW 제품</h1>
+        <p data-category-desc>원하는 커피 경험에 맞춰 COZYBREW의 다양한 제품을 만나보세요.</p>
+      </div>
+    </section>
+
+    <section class="category-toolbar">
+      <div class="page-container category-toolbar-inner">
+        <label>
+          <span class="sr-only">제품 분류</span>
+          <select data-category-select>
+            <option value="all">전체 제품</option>
+            <option value="espresso">에스프레소 머신</option>
+            <option value="grinder">그라인더</option>
+            <option value="capsule">캡슐머신</option>
+            <option value="goods">커피용품</option>
+          </select>
+        </label>
+        <form class="category-search" data-category-search>
+          <input type="search" placeholder="제품명 또는 키워드를 입력하세요">
+          <button type="submit" aria-label="검색"><img src="./image/header_icon1.png" alt=""></button>
+        </form>
+      </div>
+    </section>
+
+    <section class="page-container category-feature-nav" aria-label="대표 분류">
+      <a href="./products.html?category=espresso"><img src="./image/sec01_1.png" alt=""><strong>에스프레소 머신</strong></a>
+      <a href="./products.html?category=grinder"><img src="./image/product_grinder_black.png" alt=""><strong>그라인더</strong></a>
+      <a href="./products.html?category=capsule"><img src="./image/product_capsule_cream.png" alt=""><strong>캡슐머신</strong></a>
+      <a href="./products.html?category=goods"><img src="./image/product_drip_kettle.png" alt=""><strong>커피용품</strong></a>
+    </section>
+
+    <section class="page-container category-results">
+      <div class="page-title-row">
+        <div>
+          <h2 data-category-section-title>베스트 제품</h2>
+          <p data-category-count>총 0개의 제품</p>
+        </div>
+        <div class="sort-box">
+          <select data-category-sort>
+            <option>추천순</option>
+            <option>인기순</option>
+            <option>낮은 가격순</option>
+          </select>
+        </div>
+      </div>
+      <div class="catalog-grid" data-category-grid></div>
+      <div class="support-strip category-service">
+        <article><img src="./image/sec03_2.png" alt=""><h3>무료 배송</h3><p>전 제품 무료배송 서비스</p><a href="#">배송 안내 보기</a></article>
+        <article><img src="./image/sec03_3.png" alt=""><h3>전문 설치 지원</h3><p>전문 엔지니어 방문 설치</p><a href="#">설치 상담하기</a></article>
+        <article><div class="line-icon">✓</div><h3>1년 무상 보증</h3><p>안심하고 사용하는 공식 보증</p><a href="#">보증 안내 보기</a></article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="footer-top"><strong>COZYBREW</strong><nav><a href="#">회사소개</a><a href="#">이용약관</a><a href="#">개인정보처리방침</a><a href="#">멤버십 혜택</a><a href="#">제휴문의</a></nav></div><div class="footer-bottom"><p>브루업 주식회사 ㅣ 대표 : 김혜루 ㅣ 사업자등록번호 : 123-45-67890<br>통신판매업신고 : 제 2024-서울강남-01234호 ㅣ 고객센터 : 070-1234-5678<br>주소 : 서울특별시 마포구 월드컵로 123, 10층 ㅣ © COZYBREW Co., Ltd. All rights reserved.</p><div class="sns"><span>FOLLOW US</span><a href="#">IG</a><a href="#">YT</a><a href="#">N</a><a href="#">Talk</a></div></div></footer>
+  <script src="./js/site.js?v=20260604-category-hero"></script>
+</body>
+</html>
+
