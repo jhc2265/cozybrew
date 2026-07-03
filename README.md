@@ -6,7 +6,7 @@
 <br>
 
 <br> 🔗 **데모**
-- GitHub Pages: https://jhc2265.github.io/cozybrew/ &nbsp;*(실제 저장소 주소에 맞게 수정하세요)*
+- GitHub Pages: https://jhc2265.github.io/cozybrew/ &nbsp;
 - 로그인 또는 회원가입 화면에서 **버튼을 5번 연속 클릭** → 테스트용 계정의 폼이 자동 입력됩니다.
 
 ---
