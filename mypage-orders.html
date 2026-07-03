@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>주문 조회 | COZYBREW</title>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-4Regular.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-7Bold.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-8ExtraBold.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-5Medium.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-6SemiBold.ttf" crossorigin>
+  <link rel="stylesheet" href="./css/style.css?v=20260703-webp">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="./index.html" class="logo">COZYBREW</a>
+      <nav class="gnb" aria-label="주요 메뉴" id="primary-nav">
+        <div class="nav-item"><a href="./brand.html" class="nav-link">브랜드</a><div class="dropdown"><a href="./brand.html">COZYBREW 소개</a><a href="./brand-philosophy.html">브랜드 철학</a><a href="./brand-showroom.html">쇼룸 안내</a></div></div>
+        <div class="nav-item"><a href="./products.html" class="nav-link">제품</a><div class="dropdown"><a href="./products.html">전체 제품</a><a href="./products.html?category=espresso">에스프레소 머신</a><a href="./products.html?category=grinder">그라인더</a><a href="./products.html?category=capsule">캡슐머신</a><a href="./products.html?category=goods">커피용품</a></div></div>
+        <div class="nav-item"><a href="./story-idea.html" class="nav-link">스토리</a><div class="dropdown"><a href="./story-idea.html">홈카페 아이디어</a><a href="./story-styling.html">공간별 스타일링</a><a href="./story-magazine.html">커피 라이프 매거진</a></div></div>
+        <div class="nav-item"><a href="./guide-select.html" class="nav-link">가이드</a><div class="dropdown"><a href="./guide-select.html">제품 선택 가이드</a><a href="./guide-brewing.html">추출 가이드</a><a href="./guide-care.html">관리 &amp; 세척 방법</a><a href="./guide-install.html">설치 가이드</a></div></div>
+        <div class="nav-item"><a href="./support.html" class="nav-link">고객지원</a><div class="dropdown"><a href="./support.html">공지사항</a><a href="./support-as.html">A/S 문의</a><a href="./support-delivery.html">배송·설치</a><a href="./support-faq.html">FAQ</a></div></div>
+      </nav>
+      <button class="nav-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="primary-nav"><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span></button><div class="header-icons" aria-label="사용자 메뉴">
+        <a href="./search.html" aria-label="검색"><img loading="lazy" decoding="async" src="./image/header_icon1.png" alt=""></a>
+        <a href="./login.html" aria-label="로그인"><img loading="lazy" decoding="async" src="./image/header_icon2.png" alt=""></a>
+        <a href="./cart.html" class="cart-link" aria-label="장바구니"><img loading="lazy" decoding="async" src="./image/header_icon3.png" alt=""><em>0</em></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="sub-page mypage-sub-page">
+    <section class="support-hero">
+      <img loading="eager" decoding="async" fetchpriority="high" src="./image/category_products_hero.webp" alt="">
+      <div class="support-hero-inner page-container">
+        <nav class="crumbs" aria-label="현재 위치"><a href="./index.html">홈</a><span class="sep">›</span><a href="./mypage.html">마이페이지</a><span class="sep">›</span><span class="current">주문 조회</span></nav>
+        <h1>주문 조회</h1>
+        <p>주문하신 내역과 결제·배송 상태를 확인하세요.</p>
+      </div>
+    </section>
+
+    <section class="page-container mypage-orders">
+      <div class="orders-head">
+        <h2>주문 내역</h2>
+        <a class="orders-more" href="./mypage-delivery.html">배송 조회 →</a>
+      </div>
+      <div class="orders-table">
+        <div class="orders-row orders-head-row">
+          <span>주문일자</span><span>주문번호</span><span>상품</span><span>결제금액</span><span>주문상태</span>
+        </div>
+        <a class="orders-row" href="./mypage-delivery.html">
+          <span>2026.06.28</span><span class="ono">CB-260628-0417</span><strong>시그니처 에스프레소 머신 BEX-300</strong><span>₩ 549,000</span><em class="status done">배송완료</em>
+        </a>
+        <a class="orders-row" href="./mypage-delivery.html">
+          <span>2026.06.15</span><span class="ono">CB-260615-0288</span><strong>코지 버 그라인더 CO-200 외 1건</strong><span>₩ 212,000</span><em class="status done">배송완료</em>
+        </a>
+        <a class="orders-row" href="./mypage-delivery.html">
+          <span>2026.05.30</span><span class="ono">CB-260530-0164</span><strong>드립 포트 900ml</strong><span>₩ 39,000</span><em class="status ship">배송중</em>
+        </a>
+        <a class="orders-row" href="./mypage-delivery.html">
+          <span>2026.05.12</span><span class="ono">CB-260512-0090</span><strong>미니 캡슐머신 CC-Mini</strong><span>₩ 129,000</span><em class="status paid">결제완료</em>
+        </a>
+        <a class="orders-row" href="./mypage-delivery.html">
+          <span>2026.04.20</span><span class="ono">CB-260420-0031</span><strong>드리퍼 세트</strong><span>₩ 46,000</span><em class="status done">배송완료</em>
+        </a>
+      </div>
+      <p class="mypage-sub-note">· 주문 상세와 교환·반품은 각 주문의 상세 페이지에서 진행하실 수 있습니다. · 배송 현황은 배송 조회에서 확인하세요.</p>
+      <a class="mypage-sub-back" href="./mypage.html">← 마이페이지로 돌아가기</a>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="footer-top"><strong>COZYBREW</strong><nav><a href="./brand.html">회사소개</a><a href="./terms.html">이용약관</a><a href="./privacy.html">개인정보처리방침</a><a href="./join.html">멤버십 혜택</a><a href="./support-as.html">제휴문의</a></nav></div><div class="footer-bottom"><p>브루업 주식회사 ㅣ 대표 : 김혜루 ㅣ 사업자등록번호 : 123-45-67890<br>통신판매업신고 : 제 2024-서울강남-01234호 ㅣ 고객센터 : 070-1234-5678<br>주소 : 서울특별시 마포구 월드컵로 123, 10층 ㅣ © COZYBREW Co., Ltd. All rights reserved.</p><div class="sns"><span>FOLLOW US</span><a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">IG</a><a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">YT</a><a href="https://www.naver.com" target="_blank" rel="noopener noreferrer">N</a><a href="https://pf.kakao.com" target="_blank" rel="noopener noreferrer">Talk</a></div></div></footer>
+  <script src="./js/site.js?v=20260703-webp"></script>
+</body>
+</html>

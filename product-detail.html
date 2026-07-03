@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>제품 상세 | COZYBREW</title>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-4Regular.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-7Bold.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-8ExtraBold.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-5Medium.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-6SemiBold.ttf" crossorigin>
+  <link rel="stylesheet" href="./css/style.css?v=20260703-webp">
+  <style>
+  /* =========================================================
+     상세페이지 새 시안 전용 스타일 (scoped: .pd2)
+     기존 style.css 변수(--brown, --cream, --gold 등) 재사용
+     ========================================================= */
+  html { scroll-behavior: smooth; }
+  .pd2 { --pd-gap: 28px; color: var(--text); }
+  .pd2 .page-container { max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
+  #reviews { scroll-margin-top: 80px; }
+  .pd2 .kicker::before { content: none; display: none; } /* 소제목 앞 선 전체 제거 */
+
+  /* 0. 상단 sticky 미니 구매바 (스크롤 시 노출) */
+  .pd2-stickybar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 40;
+    background: rgba(255,255,255,.92); backdrop-filter: saturate(1.2) blur(8px);
+    border-bottom: 1px solid var(--line);
+    transform: translateY(-100%); opacity: 0; transition: .35s ease;
+    pointer-events: none;
+  }
+  .pd2-stickybar.show { transform: translateY(0); opacity: 1; pointer-events: auto; }
+  .pd2-stickybar-inner { display: flex; align-items: center; gap: 18px; padding: 12px var(--gutter); max-width: var(--container); margin-inline: auto; }
+  .pd2-stickybar img { width: 44px; height: 44px; object-fit: cover; border-radius: 8px; }
+  .pd2-stickybar .name { font-weight: 700; font-size: var(--fs-lg); }
+  .pd2-stickybar .price { color: var(--brown); font-weight: 700; }
+  .pd2-stickybar .spacer { margin-left: auto; }
+  .pd2-stickybar .btn { padding: 10px 22px; }
+
+  /* 1. Hero */
+  .pd2-back { padding: 12px 0 4px; font-size: var(--fs-sm); color: var(--muted); }
+  .pd2-back a { color: var(--muted); font-size: var(--fs-sm); }
+  .pd2-hero { display: grid; grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr); gap: 56px; padding: 4px 0 96px; align-items: stretch; }
+
+  /* 갤러리 (sticky 제거 — 본문과 자연스럽게 스크롤) */
+  .pd2-gallery { position: static; display: flex; flex-direction: column; }
+  .pd2-main {
+    position: relative; flex: 1 1 0; min-height: 0; border-radius: 18px; overflow: hidden;
+    background: var(--cream); border: 1px solid var(--line);
+  }
+  .pd2-main img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 18px; box-sizing: border-box; display: block; }
+  /* 좌우 화살표 */
+  .pd2-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
+    width: 40px; height: 40px; border: 0; cursor: pointer; background: none; padding: 0;
+    color: var(--brown); font-size: 38px; line-height: 1; font-weight: 300;
+    text-shadow: 0 1px 4px rgba(255,255,255,.7);
+    display: flex; align-items: center; justify-content: center; transition: .18s;
+  }
+  .pd2-arrow:hover { color: var(--deep); transform: translateY(-50%) scale(1.15); }
+  .pd2-arrow.prev { left: 8px; }
+  .pd2-arrow.next { right: 8px; }
+  .pd2-badge {
+    position: absolute; top: 16px; left: 16px; z-index: 2;
+    background: var(--brown); color: #fff; font-size: 12px; font-weight: 700;
+    letter-spacing: .08em; padding: 6px 12px; border-radius: 999px;
+  }
+  .pd2-thumbs-wrap { position: relative; }
+  /* 오른쪽 페이드 — 더 많은 사진이 있음을 암시 */
+  .pd2-thumbs-wrap::after {
+    content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 60px;
+    background: linear-gradient(to right, rgba(255,255,255,0), #fff 85%);
+    pointer-events: none; border-radius: 0 12px 12px 0;
+  }
+  .pd2-thumbs { display: flex; gap: 10px; margin-top: 12px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; -ms-overflow-style: none; }
+  .pd2-thumbs::-webkit-scrollbar { display: none; }
+  .pd2-thumbs button {
+    flex: 0 0 84px; aspect-ratio: 1; border-radius: 12px; overflow: hidden; padding: 0;
+    border: 1.5px solid var(--line); background: var(--cream); cursor: pointer; transition: .2s;
+  }
+  .pd2-thumbs button.active { border-color: var(--brown); }
+  .pd2-thumbs img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* 구매 패널 */
+  .pd2-info .crumbs { font-size: var(--fs-sm); color: var(--muted); margin-bottom: 12px; }
+  .pd2-info .crumbs a { color: var(--muted); }
+  .pd2-rating { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 12px; text-decoration: none; color: inherit; }
+  .pd2-stars { color: var(--gold); letter-spacing: 2px; font-size: 15px; }
+  .pd2-rating .count { color: var(--muted); font-size: var(--fs-sm); }
+  .pd2-rating:hover .count { text-decoration: underline; }
+  .pd2-info h1 { font-size: var(--fs-8xl); line-height: 1.28; font-weight: 800; margin: 0 0 14px; }
+  .pd2-info .lead { color: var(--muted); font-size: var(--fs-lg); line-height: var(--lh-relaxed); margin: 0 0 16px; }
+  .pd2-chips { display: flex; flex-wrap: wrap; gap: 12px 8px; margin-bottom: 14px; }
+  .pd2-chip {
+    font-size: var(--fs-sm); color: var(--brown); background: var(--cream);
+    border: 1px solid var(--line); padding: 7px 13px; border-radius: 999px;
+  }
+  .pd2-price { display: flex; align-items: baseline; gap: 10px; padding: 20px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .pd2-price .now { font-size: var(--fs-9xl); font-weight: 800; color: var(--deep); }
+  .pd2-price .was { color: var(--muted-2); text-decoration: line-through; font-size: var(--fs-lg); }
+  .pd2-price .off { color: #c0531f; font-weight: 700; font-size: var(--fs-lg); }
+
+  .pd2-meta { margin: 20px 0; display: grid; gap: 14px; }
+  .pd2-meta div { display: grid; grid-template-columns: 70px 1fr; gap: 12px; font-size: var(--fs-md); }
+  .pd2-meta dt { color: var(--muted); }
+  .pd2-meta dd { margin: 0; color: var(--text); }
+
+  .pd2-buy { display: flex; gap: 12px; align-items: center; margin: 16px 0; }
+  .pd2-qty { display: inline-flex; align-items: center; border: 1px solid var(--line-strong); border-radius: 10px; overflow: hidden; }
+  .pd2-qty button { width: 42px; height: 46px; background: #fff; border: 0; font-size: 18px; cursor: pointer; color: var(--text); }
+  .pd2-qty span { width: 48px; text-align: center; font-weight: 600; }
+  .pd2-total { margin-left: auto; text-align: right; }
+  .pd2-total span { display: block; color: var(--muted); font-size: var(--fs-sm); }
+  .pd2-total strong { font-size: var(--fs-xl); color: var(--muted-2); font-weight: 700; transition: .2s; } /* 기본 수량(1)일 땐 약하게 */
+  .pd2-total.active strong { font-size: var(--fs-4xl); color: var(--brown); } /* 수량 변경 시 강조 */
+  .pd2-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .pd2-actions .btn { padding: 16px; font-size: var(--fs-lg); border-radius: 12px; }
+
+  /* 신뢰 스트립 */
+  .pd2-trust { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; margin-top: 20px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .pd2-trust div { padding: 16px 14px; text-align: center; border: 0; }
+  .pd2-trust div + div { border-left: 1px solid var(--line); } /* 경계마다 단일 구분선 */
+  .pd2-trust .ic { display: flex; justify-content: center; align-items: center; height: 22px; color: var(--brown); }
+  .pd2-trust .ic svg { width: 28px; height: 28px; }
+  .pd2-trust strong { display: block; font-size: var(--fs-sm); margin: 4px 0 1px; line-height: 1.2; }
+  .pd2-trust small { color: var(--muted); font-size: 12px; line-height: 1.2; }
+
+  /* 2. 에디토리얼 (라이프스타일 1컷 + 카피) */
+  .pd2-editorial { background: var(--deep); color: #fff; margin-top: 12px; }
+  .pd2-editorial .inner { max-width: var(--container); margin-inline: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch; }
+  .pd2-editorial .copy { padding: 72px 56px; align-self: center; }
+  /* 넓은 화면: 텍스트를 본문 컨테이너 왼쪽 기준으로 정렬 + 줄 길이 제한 */
+  .pd2-editorial .copy > * { max-width: 540px; }
+  .pd2-editorial .kicker { color: var(--gold-light); letter-spacing: .18em; font-size: var(--fs-sm); font-weight: 600; }
+  .pd2-editorial h2 { font-size: var(--fs-8xl); line-height: var(--lh-tight); font-weight: 800; margin: 14px 0 18px; }
+  .pd2-editorial p { color: rgba(255,255,255,.78); line-height: var(--lh-relaxed); font-size: var(--fs-lg); }
+  .pd2-editorial .visual { background: var(--cream); min-height: 460px; overflow: hidden; }
+  .pd2-editorial .visual img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* 3. 핵심 가치 (교차 split — 사진 나열 아닌 변주) */
+  .pd2-section { padding: 96px 0; }
+  .pd2-section.cream { background: var(--cream); }
+  .pd2-head { text-align: center; max-width: 640px; margin: 0 auto 56px; }
+  .pd2-head .kicker { color: var(--gold); letter-spacing: .18em; font-size: var(--fs-sm); font-weight: 700; justify-content: center; gap: 0; margin-bottom: 4px; }
+  .pd2-head .kicker::before { content: none; display: none; } /* 제목 앞 선 제거 */
+  .pd2-head h2 { font-size: var(--fs-7xl); font-weight: 800; line-height: var(--lh-tight); margin: 12px 0 14px; }
+  .pd2-head p { color: var(--muted); line-height: var(--lh-relaxed); }
+
+  .pd2-split { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .pd2-split + .pd2-split { margin-top: 88px; }
+  .pd2-split.reverse .pd2-split-media { order: 2; }
+  .pd2-split-media { border-radius: 18px; overflow: hidden; aspect-ratio: 3/2; background: var(--cream); border: 1px solid var(--line); }
+  .pd2-split-media img { width: 100%; height: 100%; object-fit: cover; }
+  .pd2-split-copy .kicker { color: var(--muted); letter-spacing: .16em; font-size: var(--fs-xs); font-weight: 700; } /* 블록 머리말: 섹션 머리말(골드)보다 한 단계 낮춤 */
+  .pd2-split-copy h3 { font-size: var(--fs-6xl); font-weight: 800; line-height: var(--lh-tight); margin: 10px 0 16px; }
+  .pd2-split-copy p { color: var(--muted); line-height: var(--lh-relaxed); margin-bottom: 18px; font-size: var(--fs-md); }
+  .pd2-split-copy ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .pd2-split-copy li { position: relative; padding-left: 26px; font-size: var(--fs-md); }
+  .pd2-split-copy li::before {
+    content: ""; position: absolute; left: 0; top: 0; width: 16px; height: 1lh;
+    background-color: var(--gold);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%20-960%20960%20960'%3E%3Cpath%20d='M382-240%20154-468l57-57%20171%20171%20367-367%2057%2057-424%20424Z'/%3E%3C/svg%3E") no-repeat center / 16px;
+    mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%20-960%20960%20960'%3E%3Cpath%20d='M382-240%20154-468l57-57%20171%20171%20367-367%2057%2057-424%20424Z'/%3E%3C/svg%3E") no-repeat center / 16px;
+  } /* 업로드 체크 아이콘 · 한 줄 높이 기준 수직 중앙 정렬 */
+
+  /* 4. 디테일 카드 3-up */
+  .pd2-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+  .pd2-card { border-radius: 18px; overflow: hidden; background: #fff; border: 1px solid var(--line); }
+  .pd2-card .img { aspect-ratio: 4/3; background: var(--cream); }
+  .pd2-card .img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pd2-card .txt { padding: 18px 22px 24px; }
+  .pd2-card h4 { font-size: var(--fs-xl); font-weight: 700; margin: 0 0 4px; }
+  .pd2-card p { color: var(--muted); font-size: var(--fs-sm); line-height: var(--lh-relaxed); margin: 0; }
+
+  /* 5. 스펙 */
+  .pd2-spec { display: grid; grid-template-columns: .9fr 1.1fr; gap: 48px; align-items: stretch; }
+  .pd2-spec-visual { border-radius: 18px; overflow: hidden; background: var(--cream); border: 1px solid var(--line); }
+  .pd2-spec-visual img { width: 100%; height: 100%; object-fit: contain; padding: 10px; box-sizing: border-box; }
+  .pd2-spec table { width: 100%; border-collapse: collapse; }
+  .pd2-spec th, .pd2-spec td { text-align: left; padding: 16px 4px; border-bottom: 1px solid var(--line); font-size: var(--fs-md); }
+  .pd2-spec th { color: var(--muted); font-weight: 500; width: 38%; }
+  .pd2-spec td { font-weight: 600; }
+  .pd2-notice { margin-top: 28px; display: flex; align-items: center; gap: 12px; background: var(--cream); border-radius: 12px; padding: 18px 20px; color: var(--muted); font-size: var(--fs-sm); line-height: var(--lh-relaxed); }
+  .pd2-notice strong { color: var(--gold); flex: 0 0 auto; display: inline-flex; align-items: center; }
+  .pd2-notice strong svg { width: 20px; height: 20px; display: block; }
+
+  /* 6. 리뷰 */
+  .pd2-review-top { display: grid; grid-template-columns: 230px 1fr; gap: 48px; align-items: center; margin-bottom: 44px; }
+  .pd2-review-score { text-align: center; background: var(--cream); border-radius: 18px; padding: 32px 20px; }
+  .pd2-review-score .num { font-size: 52px; font-weight: 800; line-height: 1; color: var(--deep); }
+  .pd2-review-score .stars { color: var(--gold); letter-spacing: 3px; margin: 10px 0 6px; }
+  .pd2-review-score small { color: var(--muted); }
+  .pd2-review-bars { display: grid; gap: 10px; }
+  .pd2-bar { display: grid; grid-template-columns: 52px 1fr 40px; align-items: center; gap: 12px; font-size: var(--fs-sm); color: var(--muted); }
+  .pd2-bar .track { height: 8px; background: var(--line); border-radius: 999px; overflow: hidden; }
+  .pd2-bar .fill { height: 100%; background: var(--gold); border-radius: 999px; }
+  .pd2-review-list { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
+  .pd2-review { border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+  .pd2-review .meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .pd2-review .who { font-weight: 600; font-size: var(--fs-sm); }
+  .pd2-review .stars { color: var(--gold); font-size: 13px; letter-spacing: 1px; }
+  .pd2-review .date { color: var(--muted-2); font-size: 12px; }
+  .pd2-review p { margin: 0; color: var(--text); font-size: var(--fs-sm); line-height: var(--lh-relaxed); }
+
+  /* 7. FAQ 아코디언 */
+  .pd2-faq { max-width: 820px; margin-inline: auto; }
+  .pd2-faq details { border-bottom: 1px solid var(--line); }
+  .pd2-faq summary { list-style: none; cursor: pointer; padding: 22px 4px; font-weight: 600; font-size: var(--fs-lg); display: flex; justify-content: space-between; align-items: center; }
+  .pd2-faq summary::-webkit-details-marker { display: none; }
+  .pd2-faq summary::after { content: ""; flex-shrink: 0; margin-left: 16px; width: 9px; height: 9px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); border-radius: 1px; transform: rotate(45deg); transition: transform .28s ease, border-color .2s; }
+  .pd2-faq summary:hover::after { border-color: var(--brown); }
+  .pd2-faq details[open] summary::after { transform: rotate(225deg); border-color: var(--brown); }
+  .pd2-faq .answer { padding: 0 4px 24px; color: var(--muted); line-height: var(--lh-relaxed); font-size: var(--fs-md); }
+
+  /* 8. 추천 */
+  .pd2-rec { display: grid; grid-template-columns: repeat(4,1fr); gap: 22px; }
+  .pd2-rec a { display: block; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); background: #fff; text-decoration: none; color: inherit; transition: .2s; }
+  .pd2-rec a:hover { transform: translateY(-3px); box-shadow: 0 3px 9px rgba(53,33,19,.07); }
+  .pd2-rec a:hover .img img { transform: scale(1.14); }
+  .pd2-rec .img { aspect-ratio: 1; background: #fff; overflow: hidden; }
+  .pd2-rec .img img { width: 100%; height: 100%; object-fit: contain; padding: 14%; box-sizing: border-box; transition: transform .35s ease; }
+  .pd2-rec .txt { padding: 16px 16px 22px; }
+  .pd2-rec .cat { color: var(--muted); font-size: 12px; line-height: 1; }
+  .pd2-rec .nm { font-weight: 600; font-size: var(--fs-sm); margin: 2px 0 4px; line-height: 1.3; }
+  .pd2-rec .pr { font-weight: 700; color: var(--brown); line-height: 1; }
+
+  /* 반응형 */
+  @media (max-width: 920px) {
+    .pd2-hero { grid-template-columns: minmax(0, 1fr); gap: 32px; padding-bottom: 48px; }
+    .pd2-actions { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    /* 모바일 미니 구매바: 한 줄로 압축 (썸네일 숨김 · 이름 말줄임 · 버튼 축소) */
+    .pd2-stickybar img { display: none; }
+    .pd2-stickybar-inner { gap: 10px; }
+    .pd2-stickybar-inner > div:not(.spacer) { flex: 1 1 0; min-width: 0; }
+    .pd2-stickybar .name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pd2-stickybar .price { white-space: nowrap; }
+    .pd2-stickybar .btn { flex: 0 0 auto; min-width: 0; padding: 10px 14px; font-size: var(--fs-sm); white-space: nowrap; }
+    .pd2-gallery { position: static; display: block; }
+    .pd2-main { flex: none; aspect-ratio: 4/3; }
+    .pd2-editorial .inner, .pd2-split, .pd2-spec, .pd2-review-top { grid-template-columns: 1fr; }
+    .pd2-spec-visual { aspect-ratio: 1/1; }
+    .pd2-split.reverse .pd2-split-media { order: 0; }
+    .pd2-editorial .copy { padding: 48px 24px; }
+    .pd2-editorial .visual { min-height: 280px; }
+    .pd2-cards { grid-template-columns: 1fr; }
+    .pd2-rec { grid-template-columns: 1fr 1fr; }
+    .pd2-review-list { grid-template-columns: 1fr; }
+    .pd2-trust { grid-template-columns: 1fr 1fr; }
+    .pd2-trust > div + div { border-left: 0; }
+    .pd2-trust > div:nth-child(even) { border-left: 1px solid var(--line); }
+    .pd2-trust > div:nth-child(1), .pd2-trust > div:nth-child(2) { border-bottom: 1px solid var(--line); }
+      .pd2-section { padding: 64px 0; }
+  }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="./index.html" class="logo">COZYBREW</a>
+      <nav class="gnb" aria-label="주요 메뉴" id="primary-nav">
+        <div class="nav-item"><a href="./brand.html" class="nav-link">브랜드</a><div class="dropdown"><a href="./brand.html">COZYBREW 소개</a><a href="./brand-philosophy.html">브랜드 철학</a><a href="./brand-showroom.html">쇼룸 안내</a></div></div>
+        <div class="nav-item"><a href="./products.html" class="nav-link active">제품</a><div class="dropdown"><a href="./products.html">전체 제품</a><a href="./products.html?category=espresso">에스프레소 머신</a><a href="./products.html?category=grinder">그라인더</a><a href="./products.html?category=capsule">캡슐머신</a><a href="./products.html?category=goods">커피용품</a></div></div>
+        <div class="nav-item"><a href="./story-idea.html" class="nav-link">스토리</a><div class="dropdown"><a href="./story-idea.html">홈카페 아이디어</a><a href="./story-styling.html">공간별 스타일링</a><a href="./story-magazine.html">커피 라이프 매거진</a></div></div>
+        <div class="nav-item"><a href="./guide-select.html" class="nav-link">가이드</a><div class="dropdown"><a href="./guide-select.html">제품 선택 가이드</a><a href="./guide-brewing.html">추출 가이드</a><a href="./guide-care.html">관리 &amp; 세척 방법</a><a href="./guide-install.html">설치 가이드</a></div></div>
+        <div class="nav-item"><a href="./support.html" class="nav-link">고객지원</a><div class="dropdown"><a href="./support.html">공지사항</a><a href="./support-as.html">A/S 문의</a><a href="./support-delivery.html">배송·설치</a><a href="./support-faq.html">FAQ</a></div></div>
+      </nav>
+      <button class="nav-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="primary-nav"><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span></button><div class="header-icons" aria-label="사용자 메뉴">
+        <a href="./search.html" aria-label="검색"><img loading="lazy" decoding="async" src="./image/header_icon1.png" alt=""></a>
+        <a href="./login.html" aria-label="로그인"><img loading="lazy" decoding="async" src="./image/header_icon2.png" alt=""></a>
+        <a href="./cart.html" class="cart-link" aria-label="장바구니"><img loading="lazy" decoding="async" src="./image/header_icon3.png" alt=""><em>0</em></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 스크롤 시 노출되는 미니 구매바 -->
+  <div class="pd2-stickybar" id="pd2-sticky">
+    <div class="pd2-stickybar-inner">
+      <img src="./image/sec01_1.webp" alt="" data-d-sticky-img>
+      <div>
+        <div class="name" data-d-sticky-name>제품</div>
+        <div class="price" data-d-sticky-price>₩ 0</div>
+      </div>
+      <div class="spacer"></div>
+      <button class="btn btn-line" type="button" data-sticky-cart>장바구니</button>
+      <button class="btn btn-dark" type="button" data-sticky-buy>바로 구매</button>
+    </div>
+  </div>
+
+  <main class="sub-page pd2 product-detail-page">
+    <nav class="page-container pd2-back crumbs" aria-label="현재 위치"><a href="./index.html">홈</a> › <a href="./products.html">제품</a> › <span data-d-crumb>제품</span></nav>
+
+    <!-- 1. HERO -->
+    <section class="page-container pd2-hero">
+      <div class="pd2-gallery">
+        <div class="pd2-main">
+          <button class="pd2-arrow prev" type="button" data-detail-nav="prev" aria-label="이전 이미지">‹</button>
+          <img loading="eager" decoding="async" fetchpriority="high" src="./image/sec01_1.webp" alt="" data-detail-main>
+          <button class="pd2-arrow next" type="button" data-detail-nav="next" aria-label="다음 이미지">›</button>
+        </div>
+        <div class="pd2-thumbs-wrap">
+        <div class="pd2-thumbs" data-d-thumbs aria-label="상품 이미지 선택"></div>
+        </div>
+      </div>
+
+      <aside class="pd2-info">
+        <a class="pd2-rating" href="#reviews" aria-label="리뷰 보기">
+          <span class="pd2-stars">★★★★★</span>
+          <span class="count" data-d-rating-summary>4.9 · 리뷰 218개</span>
+        </a>
+        <h1 data-d-title>제품</h1>
+
+        <div class="pd2-chips" data-d-chips></div>
+
+        <div class="pd2-price">
+          <strong class="now" data-d-price>₩ 0</strong>
+        </div>
+
+        <dl class="pd2-meta">
+          <div><dt>색상</dt><dd data-d-color>-</dd></div>
+          <div><dt>구성</dt><dd data-d-components>-</dd></div>
+          <div><dt>배송</dt><dd>무료배송 · 오후 2시 이전 주문 시 당일 출고</dd></div>
+        </dl>
+
+        <div class="pd2-buy">
+          <div class="pd2-qty" aria-label="수량 선택">
+            <button type="button" data-detail-qty="minus" aria-label="수량 줄이기">−</button>
+            <span data-detail-count>1</span>
+            <button type="button" data-detail-qty="plus" aria-label="수량 늘리기">+</button>
+          </div>
+          <div class="pd2-total" data-d-total-wrap><span>합계</span><strong data-detail-total>₩ 0</strong></div>
+        </div>
+        <div class="pd2-actions">
+          <button type="button" class="btn btn-line" data-detail-cart>장바구니 담기</button>
+          <button type="button" class="btn btn-dark" data-detail-buy>바로 구매하기</button>
+        </div>
+
+        <div class="pd2-trust">
+          <div>
+            <div class="ic"><svg viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M155-195q-35-35-35-85H40v-440q0-33 23.5-56.5T120-800h560v160h120l120 160v200h-80q0 50-35 85t-85 35q-50 0-85-35t-35-85H360q0 50-35 85t-85 35q-50 0-85-35Zm113.5-56.5Q280-263 280-280t-11.5-28.5Q257-320 240-320t-28.5 11.5Q200-297 200-280t11.5 28.5Q223-240 240-240t28.5-11.5ZM120-360h32q17-18 39-29t49-11q27 0 49 11t39 29h272v-360H120v360Zm628.5 108.5Q760-263 760-280t-11.5-28.5Q737-320 720-320t-28.5 11.5Q680-297 680-280t11.5 28.5Q703-240 720-240t28.5-11.5ZM680-440h170l-90-120h-80v120ZM360-540Z"/></svg></div>
+            <strong>무료배송</strong><small>당일 출고</small>
+          </div>
+          <div>
+            <div class="ic"><svg viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="m438-338 226-226-57-57-169 169-84-84-57 57 141 141Zm42 258q-139-35-229.5-159.5T160-516v-244l320-120 320 120v244q0 152-90.5 276.5T480-80Zm0-84q104-33 172-132t68-220v-189l-240-90-240 90v189q0 121 68 220t172 132Zm0-316Z"/></svg></div>
+            <strong>1년 보증</strong><small>무상 A/S</small>
+          </div>
+          <div>
+            <div class="ic"><svg viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M160-160v-80h110l-16-14q-52-46-73-105t-21-119q0-111 66.5-197.5T400-790v84q-72 26-116 88.5T240-478q0 45 17 87.5t53 78.5l10 10v-98h80v240H160Zm400-10v-84q72-26 116-88.5T720-482q0-45-17-87.5T650-648l-10-10v98h-80v-240h240v80H690l16 14q49 49 71.5 106.5T800-482q0 111-66.5 197.5T560-170Z"/></svg></div>
+            <strong>7일 교환</strong><small>변심 가능</small>
+          </div>
+          <div>
+            <div class="ic"><svg viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M880-720v480q0 33-23.5 56.5T800-160H160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720Zm-720 80h640v-80H160v80Zm0 160v240h640v-240H160Zm0 240v-480 480Z"/></svg></div>
+            <strong>무이자 할부</strong><small>최대 6개월</small>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- 2. 에디토리얼 -->
+    <section class="pd2-editorial">
+      <div class="inner">
+        <div class="copy">
+          <p class="kicker" data-d-editorial-kicker>COZYBREW DETAIL</p>
+          <h2 data-d-editorial-title></h2>
+          <p data-d-editorial-body></p>
+        </div>
+        <div class="visual" data-d-editorial-visual></div>
+      </div>
+    </section>
+
+    <!-- 3. 핵심 가치 (교차 split) -->
+    <section class="pd2-section">
+      <div class="page-container">
+        <div class="pd2-head">
+          <p class="kicker">WHY COZYBREW</p>
+          <h2>좋은 한 잔을 위한 세 가지 기준</h2>
+        </div>
+
+        <div class="pd2-split">
+          <div class="pd2-split-media" data-d-split-visual-1></div>
+          <div class="pd2-split-copy">
+            <p class="kicker" data-d-split-kicker-1>HIGHLIGHTS</p>
+            <h3 data-d-split-title-1></h3>
+            <p data-d-split-body-1></p>
+            <ul data-d-split-list-1></ul>
+          </div>
+        </div>
+
+        <div class="pd2-split reverse">
+          <div class="pd2-split-media" data-d-split-visual-2></div>
+          <div class="pd2-split-copy">
+            <p class="kicker" data-d-split-kicker-2>USAGE</p>
+            <h3 data-d-split-title-2></h3>
+            <p data-d-split-body-2></p>
+            <ul data-d-split-list-2></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 디테일 카드 -->
+    <section class="pd2-section cream">
+      <div class="page-container">
+        <div class="pd2-head">
+          <p class="kicker">DETAILS</p>
+          <h2>세심한 디테일까지 생각한 디자인</h2>
+        </div>
+        <div class="pd2-cards" data-d-detail-cards></div>
+      </div>
+    </section>
+
+    <!-- 5. 스펙 -->
+    <section class="pd2-section">
+      <div class="page-container">
+        <div class="pd2-head">
+          <p class="kicker">SPECIFICATION</p>
+          <h2>제품 사양</h2>
+        </div>
+        <div class="pd2-spec">
+          <div class="pd2-spec-visual" data-d-spec-visual></div>
+          <table>
+            <tbody data-d-spec></tbody>
+          </table>
+        </div>
+        <div class="pd2-notice">
+          <strong class="pd2-notice-ic"><svg viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M440-400v-360h80v360h-80Zm0 200v-80h80v80h-80Z"/></svg></strong>
+          <p>사용 전 상세 안내를 확인하고 제품 특성에 맞게 관리해 주세요. 제품 사양은 생산 시점에 따라 일부 달라질 수 있습니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. 리뷰 -->
+    <section class="pd2-section cream" id="reviews">
+      <div class="page-container">
+        <div class="pd2-head">
+          <p class="kicker">REVIEWS</p>
+          <h2>고객이 직접 남긴 후기</h2>
+        </div>
+        <div class="pd2-review-top">
+          <div class="pd2-review-score">
+            <div class="num" data-d-review-num>4.9</div>
+            <div class="stars">★★★★★</div>
+            <small data-d-review-total>총 218개 리뷰</small>
+          </div>
+          <div class="pd2-review-bars" data-d-review-bars></div>
+        </div>
+        <div class="pd2-review-list" data-d-review-list></div>
+      </div>
+    </section>
+
+    <!-- 7. FAQ -->
+    <section class="pd2-section">
+      <div class="page-container">
+        <div class="pd2-head">
+          <p class="kicker">FAQ</p>
+          <h2>자주 묻는 질문</h2>
+        </div>
+        <div class="pd2-faq" data-d-faq></div>
+      </div>
+    </section>
+
+    <!-- 8. 추천 -->
+    <section class="pd2-section cream">
+      <div class="page-container">
+        <div class="pd2-head">
+          <p class="kicker">RECOMMENDED</p>
+          <h2>함께 보면 좋은 제품</h2>
+        </div>
+        <div class="pd2-rec" data-d-recommend></div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="footer-top"><strong>COZYBREW</strong><nav><a href="./brand.html">회사소개</a><a href="./terms.html">이용약관</a><a href="./privacy.html">개인정보처리방침</a><a href="./join.html">멤버십 혜택</a><a href="./support-as.html">제휴문의</a></nav></div><div class="footer-bottom"><p>브루업 주식회사 ㅣ 대표 : 김혜루 ㅣ 사업자등록번호 : 123-45-67890<br>통신판매업신고 : 제 2024-서울강남-01234호 ㅣ 고객센터 : 070-1234-5678<br>주소 : 서울특별시 마포구 월드컵로 123, 10층 ㅣ © COZYBREW Co., Ltd. All rights reserved.</p><div class="sns"><span>FOLLOW US</span><a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">IG</a><a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">YT</a><a href="https://www.naver.com" target="_blank" rel="noopener noreferrer">N</a><a href="https://pf.kakao.com" target="_blank" rel="noopener noreferrer">Talk</a></div></div></footer>
+
+  <script src="./js/site.js?v=20260703-webp"></script>
+</body></html>

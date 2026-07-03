@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>주문/결제 | COZYBREW</title>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-4Regular.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-7Bold.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-8ExtraBold.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-5Medium.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-6SemiBold.ttf" crossorigin>
+  <link rel="stylesheet" href="./css/style.css?v=20260703-webp">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="./index.html" class="logo">COZYBREW</a>
+      <nav class="gnb" aria-label="주요 메뉴" id="primary-nav">
+        <div class="nav-item"><a href="./brand.html" class="nav-link">브랜드</a><div class="dropdown"><a href="./brand.html">COZYBREW 소개</a><a href="./brand-philosophy.html">브랜드 철학</a><a href="./brand-showroom.html">쇼룸 안내</a></div></div>
+        <div class="nav-item"><a href="./products.html" class="nav-link active">제품</a><div class="dropdown"><a href="./products.html">전체 제품</a><a href="./products.html?category=espresso">에스프레소 머신</a><a href="./products.html?category=grinder">그라인더</a><a href="./products.html?category=capsule">캡슐머신</a><a href="./products.html?category=goods">커피용품</a></div></div>
+        <div class="nav-item"><a href="./story-idea.html" class="nav-link">스토리</a><div class="dropdown"><a href="./story-idea.html">홈카페 아이디어</a><a href="./story-styling.html">공간별 스타일링</a><a href="./story-magazine.html">커피 라이프 매거진</a></div></div>
+        <div class="nav-item"><a href="./guide-select.html" class="nav-link">가이드</a><div class="dropdown"><a href="./guide-select.html">제품 선택 가이드</a><a href="./guide-brewing.html">추출 가이드</a><a href="./guide-care.html">관리 &amp; 세척 방법</a><a href="./guide-install.html">설치 가이드</a></div></div>
+        <div class="nav-item"><a href="./support.html" class="nav-link">고객지원</a><div class="dropdown"><a href="./support.html">공지사항</a><a href="./support-as.html">A/S 문의</a><a href="./support-delivery.html">배송·설치</a><a href="./support-faq.html">FAQ</a></div></div>
+      </nav>
+      <button class="nav-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="primary-nav"><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span></button><div class="header-icons" aria-label="사용자 메뉴">
+        <a href="./search.html" aria-label="검색"><img loading="lazy" decoding="async" src="./image/header_icon1.png" alt=""></a>
+        <a href="./login.html" aria-label="로그인"><img loading="lazy" decoding="async" src="./image/header_icon2.png" alt=""></a>
+        <a href="./cart.html" class="cart-link" aria-label="장바구니"><img loading="lazy" decoding="async" src="./image/header_icon3.png" alt=""><em>0</em></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="sub-page form-page order-page">
+    <section class="support-hero">
+      <img loading="eager" decoding="async" fetchpriority="high" src="./image/category_products_hero.webp" alt="">
+      <div class="support-hero-inner page-container">
+        <nav class="crumbs" aria-label="현재 위치"><a href="./index.html">홈</a><span class="sep">›</span><a href="./cart.html">장바구니</a><span class="sep">›</span><span class="current">주문/결제</span></nav>
+        <h1>주문 / 결제</h1>
+        <p>주문 정보를 입력하고 결제를 완료하세요.</p>
+      </div>
+    </section>
+    <section class="form-section page-container">
+      <form class="form-card">
+        <h2>주문 / 결제</h2>
+        <div data-order-lines><div class="order-line"><span>주문 상품을 불러오는 중입니다…</span><strong>₩ 0</strong></div></div>
+        <fieldset><legend>주문자 정보</legend>
+          <label>이름<input type="text" name="ordererName" required placeholder="이름을 입력하세요"></label>
+          <label>연락처<input type="tel" name="ordererTel" required placeholder="010-0000-0000"></label>
+          <label>이메일<input type="email" name="ordererEmail" required placeholder="example@cozybrew.co.kr"></label>
+        </fieldset>
+        <fieldset><legend>배송지 정보</legend>
+          <label>받는 분<input type="text" name="receiverName" required placeholder="받는 분 이름"></label>
+          <label>연락처<input type="tel" name="receiverTel" required placeholder="010-0000-0000"></label>
+          <label>주소<input type="text" name="address" required placeholder="도로명 주소"></label>
+          <label>상세 주소<input type="text" name="addressDetail" placeholder="상세 주소를 입력하세요"></label>
+          <label>배송 메모<select><option>배송 시 요청사항을 선택하세요</option><option>문 앞에 놓아주세요</option><option>경비실에 맡겨주세요</option><option>배송 전 연락 바랍니다</option></select></label>
+        </fieldset>
+        <fieldset class="pay-methods"><legend>결제 수단</legend>
+          <label class="radio"><input type="radio" name="pay" checked> 신용·체크카드</label>
+          <label class="radio"><input type="radio" name="pay"> 실시간 계좌이체</label>
+          <label class="radio"><input type="radio" name="pay"> 간편결제</label>
+          <label class="radio"><input type="radio" name="pay"> 무통장 입금</label>
+        </fieldset>
+        <button type="submit" class="btn btn-dark">결제하기</button>
+      </form>
+      <aside class="form-aside">
+        <h3>결제 금액</h3>
+        <dl class="order-summary-box"><div><dt>상품 금액</dt><dd data-order-subtotal>₩ 0</dd></div><div><dt>회원 할인</dt><dd class="sale" data-order-discount>- ₩ 0</dd></div><div><dt>배송비</dt><dd>무료</dd></div><div class="total"><dt>총 결제금액</dt><dd data-order-total>₩ 0</dd></div></dl>
+        <p class="form-note">실제 결제가 이루어지지 않는 예시 페이지입니다.</p>
+      </aside>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="footer-top"><strong>COZYBREW</strong><nav><a href="./brand.html">회사소개</a><a href="./terms.html">이용약관</a><a href="./privacy.html">개인정보처리방침</a><a href="./join.html">멤버십 혜택</a><a href="./support-as.html">제휴문의</a></nav></div><div class="footer-bottom"><p>브루업 주식회사 ㅣ 대표 : 김혜루 ㅣ 사업자등록번호 : 123-45-67890<br>통신판매업신고 : 제 2024-서울강남-01234호 ㅣ 고객센터 : 070-1234-5678<br>주소 : 서울특별시 마포구 월드컵로 123, 10층 ㅣ © COZYBREW Co., Ltd. All rights reserved.</p><div class="sns"><span>FOLLOW US</span><a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">IG</a><a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">YT</a><a href="https://www.naver.com" target="_blank" rel="noopener noreferrer">N</a><a href="https://pf.kakao.com" target="_blank" rel="noopener noreferrer">Talk</a></div></div></footer>
+  <script src="./js/site.js?v=20260703-webp"></script>
+</body></html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>공간별 스타일링 | COZYBREW</title>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-4Regular.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-7Bold.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-8ExtraBold.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-5Medium.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-6SemiBold.ttf" crossorigin>
+  <link rel="stylesheet" href="./css/style.css?v=20260703-webp">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="./index.html" class="logo">COZYBREW</a>
+      <nav class="gnb" aria-label="주요 메뉴" id="primary-nav">
+        <div class="nav-item"><a href="./brand.html" class="nav-link">브랜드</a><div class="dropdown"><a href="./brand.html">COZYBREW 소개</a><a href="./brand-philosophy.html">브랜드 철학</a><a href="./brand-showroom.html">쇼룸 안내</a></div></div>
+        <div class="nav-item"><a href="./products.html" class="nav-link">제품</a><div class="dropdown"><a href="./products.html">전체 제품</a><a href="./products.html?category=espresso">에스프레소 머신</a><a href="./products.html?category=grinder">그라인더</a><a href="./products.html?category=capsule">캡슐머신</a><a href="./products.html?category=goods">커피용품</a></div></div>
+        <div class="nav-item"><a href="./story-idea.html" class="nav-link active">스토리</a><div class="dropdown"><a href="./story-idea.html">홈카페 아이디어</a><a href="./story-styling.html">공간별 스타일링</a><a href="./story-magazine.html">커피 라이프 매거진</a></div></div>
+        <div class="nav-item"><a href="./guide-select.html" class="nav-link">가이드</a><div class="dropdown"><a href="./guide-select.html">제품 선택 가이드</a><a href="./guide-brewing.html">추출 가이드</a><a href="./guide-care.html">관리 &amp; 세척 방법</a><a href="./guide-install.html">설치 가이드</a></div></div>
+        <div class="nav-item"><a href="./support.html" class="nav-link">고객지원</a><div class="dropdown"><a href="./support.html">공지사항</a><a href="./support-as.html">A/S 문의</a><a href="./support-delivery.html">배송·설치</a><a href="./support-faq.html">FAQ</a></div></div>
+      </nav>
+      <button class="nav-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="primary-nav"><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span></button><div class="header-icons" aria-label="사용자 메뉴"><a href="./search.html" aria-label="검색"><img loading="lazy" decoding="async" src="./image/header_icon1.png" alt=""></a><a href="./login.html" aria-label="로그인"><img loading="lazy" decoding="async" src="./image/header_icon2.png" alt=""></a><a href="./cart.html" class="cart-link" aria-label="장바구니"><img loading="lazy" decoding="async" src="./image/header_icon3.png" alt=""><em>0</em></a></div>
+    </div>
+  </header>
+
+  <main class="story-page">
+    <section class="story-hero">
+      <div class="story-hero-inner page-container">
+        <nav class="crumbs" aria-label="현재 위치"><a href="./index.html">홈</a><span class="sep">›</span><a href="./story-magazine.html">스토리</a><span class="sep">›</span><span class="current">공간별 스타일링</span></nav>
+        <h1>공간별 스타일링</h1>
+        <p>공간에 어울리는 커피 스타일링으로 일상에 여유와 따뜻함을 더해보세요.</p>
+      </div>
+      <img loading="eager" decoding="async" fetchpriority="high" class="story-hero-image" src="./image/story/story-styling-hero.jpg" alt="">
+    </section>
+
+    <nav class="guide-install-tabs" aria-label="스토리 카테고리">
+      <a href="./story-idea.html">홈카페 아이디어</a>
+      <a href="./story-styling.html" class="active">공간별 스타일링</a>
+      <a href="./story-magazine.html">커피 라이프 매거진</a>
+    </nav>
+
+
+    <section class="story-feature page-container">
+      <img loading="lazy" decoding="async" class="story-image large" src="./image/story/story-styling-feature.jpg" alt="우드톤 홈카페 스타일링">
+      <div class="story-feature-copy">
+        <p class="brand-kicker">FEATURED</p>
+        <h2>따뜻한 우드톤 홈카페 스타일링</h2>
+        <p>자연스러운 우드 질감과 부드러운 컬러의 조화로 머물기 편안한 홈카페를 완성해보세요.</p>
+        <a href="./story-detail.html?id=styling-feature">자세히 보기</a>
+      </div>
+    </section>
+
+    <section class="story-card-grid page-container">
+      <article><img loading="lazy" decoding="async" class="story-image" src="./image/story/story-styling-card-1.jpg" alt="원룸 커피 코너"><p>원룸에 어울리는 작은 커피 코너</p><h3>좁은 공간도 감성 가득한 나만의 커피 공간으로 바꿔보세요.</h3><span>작은 가구와 밝은 톤으로 부담 없는 홈카페를 완성합니다.</span><a href="./story-detail.html?id=styling-1">자세히 보기</a></article>
+      <article><img loading="lazy" decoding="async" class="story-image" src="./image/story/story-styling-card-2.jpg" alt="주방 커피 스테이션"><p>주방 한 켠 커피 스테이션</p><h3>매일의 시작을 더욱 특별하게 만드는 주방 속 커피 아이디어.</h3><span>물 사용, 전원, 컵 보관을 고려한 실용적인 스타일링입니다.</span><a href="./story-detail.html?id=styling-2">자세히 보기</a></article>
+      <article><img loading="lazy" decoding="async" class="story-image" src="./image/story/story-styling-card-3.jpg" alt="거실 홈카페 테이블"><p>거실에서 즐기는 여유로운 홈카페</p><h3>가족, 친구와 함께하는 시간을 더 따뜻하게 만들어보세요.</h3><span>대화와 휴식이 이어지는 거실형 홈카페 세팅입니다.</span><a href="./story-detail.html?id=styling-3">자세히 보기</a></article>
+    </section>
+
+    <section class="story-newsletter page-container">
+      <div class="story-mail-icon"><img loading="lazy" decoding="async" src="./image/icons/style-home-search.svg" alt=""></div>
+      <div><h2>우리 집에 맞는 스타일 찾아보기</h2><p>공간과 취향에 맞는 홈카페 스타일을 차근차근 추천해드려요.</p></div>
+      <a class="story-cta-button" href="./style-recommend.html">스타일 추천 받기</a>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="footer-top"><strong>COZYBREW</strong><nav><a href="./brand.html">회사소개</a><a href="./terms.html">이용약관</a><a href="./privacy.html">개인정보처리방침</a><a href="./join.html">멤버십 혜택</a><a href="./support-as.html">제휴문의</a></nav></div><div class="footer-bottom"><p>브루업 주식회사 ㅣ 대표 : 김혜루 ㅣ 사업자등록번호 : 123-45-67890<br>통신판매업신고 : 제 2024-서울강남-01234호 ㅣ 고객센터 : 070-1234-5678<br>주소 : 서울특별시 마포구 월드컵로 123, 10층 ㅣ © COZYBREW Co., Ltd. All rights reserved.</p><div class="sns"><span>FOLLOW US</span><a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">IG</a><a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">YT</a><a href="https://www.naver.com" target="_blank" rel="noopener noreferrer">N</a><a href="https://pf.kakao.com" target="_blank" rel="noopener noreferrer">Talk</a></div></div></footer>
+  <script src="./js/site.js?v=20260703-webp"></script>
+</body></html>

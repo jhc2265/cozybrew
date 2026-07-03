@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>검색 | COZYBREW</title>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-4Regular.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-7Bold.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-8ExtraBold.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-5Medium.ttf" crossorigin>
+  <link rel="preload" as="font" type="font/ttf" href="./font/Paperlogy-6SemiBold.ttf" crossorigin>
+  <link rel="stylesheet" href="./css/style.css?v=20260703-webp">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="./index.html" class="logo">COZYBREW</a>
+      <nav class="gnb" aria-label="주요 메뉴" id="primary-nav">
+        <div class="nav-item"><a href="./brand.html" class="nav-link">브랜드</a><div class="dropdown"><a href="./brand.html">COZYBREW 소개</a><a href="./brand-philosophy.html">브랜드 철학</a><a href="./brand-showroom.html">쇼룸 안내</a></div></div>
+        <div class="nav-item"><a href="./products.html" class="nav-link">제품</a><div class="dropdown"><a href="./products.html">전체 제품</a><a href="./products.html?category=espresso">에스프레소 머신</a><a href="./products.html?category=grinder">그라인더</a><a href="./products.html?category=capsule">캡슐머신</a><a href="./products.html?category=goods">커피용품</a></div></div>
+        <div class="nav-item"><a href="./story-idea.html" class="nav-link">스토리</a><div class="dropdown"><a href="./story-idea.html">홈카페 아이디어</a><a href="./story-styling.html">공간별 스타일링</a><a href="./story-magazine.html">커피 라이프 매거진</a></div></div>
+        <div class="nav-item"><a href="./guide-select.html" class="nav-link">가이드</a><div class="dropdown"><a href="./guide-select.html">제품 선택 가이드</a><a href="./guide-brewing.html">추출 가이드</a><a href="./guide-care.html">관리 &amp; 세척 방법</a><a href="./guide-install.html">설치 가이드</a></div></div>
+        <div class="nav-item"><a href="./support.html" class="nav-link">고객지원</a><div class="dropdown"><a href="./support.html">공지사항</a><a href="./support-as.html">A/S 문의</a><a href="./support-delivery.html">배송·설치</a><a href="./support-faq.html">FAQ</a></div></div>
+      </nav>
+      <button class="nav-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="primary-nav"><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span></button><div class="header-icons" aria-label="사용자 메뉴">
+        <a href="./search.html" aria-label="검색"><img loading="lazy" decoding="async" src="./image/header_icon1.png" alt=""></a>
+        <a href="./login.html" aria-label="로그인"><img loading="lazy" decoding="async" src="./image/header_icon2.png" alt=""></a>
+        <a href="./cart.html" aria-label="장바구니"><img loading="lazy" decoding="async" src="./image/header_icon3.png" alt=""></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="sub-page search-page">
+    <section class="sub-hero search-hero">
+      <img loading="eager" decoding="async" fetchpriority="high" src="./image/main_1.webp" alt="">
+      <div class="sub-hero-inner">
+        <h1>검색</h1>
+        <p>원하시는 제품이나 정보를 검색해보세요.<br>COZYBREW가 당신의 커피 라이프를 더 풍요롭게 만듭니다.</p>
+        <form class="search-box" data-search-form>
+          <input type="search" placeholder="무엇을 찾고 계신가요?">
+          <button class="search-clear" type="button" aria-label="검색어 지우기">×</button>
+          <button type="submit" aria-label="검색"><img loading="lazy" decoding="async" src="./image/header_icon1.png" alt=""></button>
+        </form>
+      </div>
+    </section>
+
+    <section class="search-quick page-container">
+      <div class="recent-search-row">
+        <h2>최근 검색어</h2>
+        <div class="keyword-list">
+          <button data-keyword="에스프레소 머신">에스프레소 머신 <span>×</span></button><button data-keyword="그라인더">그라인더 <span>×</span></button><button data-keyword="드립포트">드립포트 <span>×</span></button><button data-keyword="캡슐머신">캡슐머신 <span>×</span></button><button data-keyword="우유 스팀피처">우유 스팀피처 <span>×</span></button>
+        </div>
+      </div>
+      <div class="search-empty-state" data-empty-state>
+        <p class="empty-title">현재 검색 결과가 없습니다.</p>
+        <span class="empty-desc">위 검색창에 원하시는 제품을 입력하면 이곳에 결과가 표시됩니다.</span>
+      </div>
+    </section>
+
+    <section class="page-container product-results" hidden>
+      <div class="page-title-row">
+        <div><h2>검색 결과</h2><p>'에스프레소 머신'에 대한 검색 결과입니다.</p></div>
+        <div class="sort-box"><span>총 24개의 결과</span><select><option>추천순</option><option>인기순</option><option>낮은 가격순</option></select></div>
+      </div>
+      <div class="filter-tabs"></div>
+      <div class="catalog-grid"></div>
+    </section>
+
+    <section class="search-quick search-help-wrap page-container">
+      <nav class="search-help-bar" aria-label="검색 도움말">
+        <strong>도움이 필요하신가요?</strong>
+        <a href="./support-faq.html">FAQ</a>
+        <a href="./support-as.html">A/S 문의</a>
+        <a href="./support-delivery.html">배송·설치</a>
+      </nav>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="footer-top"><strong>COZYBREW</strong><nav><a href="./brand.html">회사소개</a><a href="./terms.html">이용약관</a><a href="./privacy.html">개인정보처리방침</a><a href="./join.html">멤버십 혜택</a><a href="./support-as.html">제휴문의</a></nav></div><div class="footer-bottom"><p>브루업 주식회사 ㅣ 대표 : 김혜루 ㅣ 사업자등록번호 : 123-45-67890<br>통신판매업신고 : 제 2024-서울강남-01234호 ㅣ 고객센터 : 070-1234-5678<br>주소 : 서울특별시 마포구 월드컵로 123, 10층 ㅣ © COZYBREW Co., Ltd. All rights reserved.</p><div class="sns"><span>FOLLOW US</span><a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">IG</a><a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">YT</a><a href="https://www.naver.com" target="_blank" rel="noopener noreferrer">N</a><a href="https://pf.kakao.com" target="_blank" rel="noopener noreferrer">Talk</a></div></div></footer>
+  <script src="./js/site.js?v=20260703-webp"></script>
+</body>
+</html>

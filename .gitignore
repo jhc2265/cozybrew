@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+.npm-cache/
+
+# Local tooling / preview server
+.agents/
+.claude/
+.chrome-preview/
+.codex-preview-server.cjs
+_preview_server.bat
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.log
