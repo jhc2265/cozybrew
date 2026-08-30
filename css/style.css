@@ -506,7 +506,7 @@ h1 {
   grid-template-areas:
     "media"
     "title"
-    "desc"
+    "teaser"
     "link";
   grid-template-rows: 122px auto auto 18px;
   align-content: center;
@@ -555,6 +555,17 @@ h1 {
 .feature-card h3 {
   font-size: var(--fs-2xl);
   line-height: var(--lh-snug);
+}
+
+.feature-card .card-teaser,
+.product-card .card-teaser {
+  grid-area: teaser;
+  display: block;
+  margin: 0;
+  color: #6f5e52;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+  text-align: center;
 }
 
 .feature-card p,
@@ -627,6 +638,11 @@ h1 {
     color: rgba(255, 255, 255, .72);
     opacity: 1;
     transform: translateY(0);
+  }
+
+  .feature-card:is(:hover, :focus-within) .card-teaser,
+  .product-card:is(:hover, :focus-within) .card-teaser {
+    display: none;
   }
 
   .feature-card:is(:hover, :focus-within) a,
@@ -8279,4 +8295,33 @@ html, body { overflow-x: clip; }
   .product-grid .product-card,
   .product-grid .feature-card h3,
   .product-grid .product-card h3,
-  .produc
+  .product-grid .feature-card p,
+  .product-grid .product-card p,
+  .product-grid .feature-card a,
+  .product-grid .product-card a,
+  .product-grid .feature-card .feature-img,
+  .product-grid .product-card .product-img {
+    transition-duration: .45s;
+  }
+}
+
+/* index 제품 카드: 모바일에서는 모든 내용을 자연스러운 한 줄 흐름으로 고정 */
+@media (max-width: 900px) {
+  .product-grid .feature-card,
+  .product-grid .product-card {
+    height: auto;
+    min-height: 318px;
+    grid-template-areas:
+      "media"
+      "title"
+      "teaser"
+      "link";
+    grid-template-rows: 122px auto auto 18px;
+    justify-items: center;
+  }
+
+  .product-grid .feature-card a,
+  .product-grid .product-card a {
+    justify-self: center;
+  }
+}
