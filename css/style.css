@@ -8364,6 +8364,7 @@ html, body { overflow-x: clip; }
     justify-content: flex-end;
     padding: 0;
     line-height: var(--lh-tight);
+    transform: translateY(-6px);
     white-space: nowrap;
   }
 }
