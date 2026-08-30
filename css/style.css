@@ -8349,16 +8349,21 @@ html, body { overflow-x: clip; }
   }
 
   .news-head h2 {
+    margin-bottom: 0;
     font-size: clamp(30px, 8.5vw, 36px);
     line-height: var(--lh-tight);
     white-space: nowrap;
   }
 
   .news-head > a {
+    align-self: end;
+    min-height: 0;
     min-width: max-content;
+    align-items: flex-end;
     justify-self: end;
     justify-content: flex-end;
-    padding-bottom: 1px;
+    padding: 0;
+    line-height: var(--lh-tight);
     white-space: nowrap;
   }
 }
