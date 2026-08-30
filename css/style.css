@@ -507,8 +507,9 @@ h1 {
     "media"
     "title"
     "teaser"
+    "desc"
     "link";
-  grid-template-rows: 122px auto auto 18px;
+  grid-template-rows: 122px auto auto 0 18px;
   align-content: center;
   row-gap: var(--space-2);
   text-align: center;
@@ -8310,14 +8311,26 @@ html, body { overflow-x: clip; }
   .product-grid .feature-card,
   .product-grid .product-card {
     height: auto;
-    min-height: 318px;
+    min-height: 290px;
     grid-template-areas:
       "media"
       "title"
       "teaser"
+      "desc"
       "link";
-    grid-template-rows: 122px auto auto 18px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 122px auto auto 0 18px;
     justify-items: center;
+  }
+
+  .product-grid .feature-card > *,
+  .product-grid .product-card > * {
+    grid-column: 1;
+  }
+
+  .product-grid .feature-card > p,
+  .product-grid .product-card > p {
+    display: none;
   }
 
   .product-grid .feature-card a,
