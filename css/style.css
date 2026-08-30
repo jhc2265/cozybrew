@@ -8338,3 +8338,27 @@ html, body { overflow-x: clip; }
     justify-self: center;
   }
 }
+
+/* index 뉴스 헤더: 모바일에서 제목과 더보기를 같은 기준선에 정렬 */
+@media (max-width: 720px) {
+  .news-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    column-gap: var(--space-3);
+  }
+
+  .news-head h2 {
+    font-size: clamp(30px, 8.5vw, 36px);
+    line-height: var(--lh-tight);
+    white-space: nowrap;
+  }
+
+  .news-head > a {
+    min-width: max-content;
+    justify-self: end;
+    justify-content: flex-end;
+    padding-bottom: 1px;
+    white-space: nowrap;
+  }
+}
